@@ -1,0 +1,59 @@
+version: '3'
+services:
+  pwn_team1_task1:
+    build: ./docker_env/team1_task1/
+    ports:
+     - "9999:9999"
+    networks:
+      team1_net:
+        ipv4_address: 192.168.1.128
+        ipv6_address: 2001:3984:3989::10
+  pwn_team1_task2:
+    build: ./docker_env/team1_task2/
+    ports:
+     - "9998:9999"
+    networks:
+      team1_net:
+        ipv4_address: 192.168.1.129
+        ipv6_address: 2001:3984:3989::11
+  pwn_team2_task1:
+    build: ./docker_env/team2_task1/
+    ports:
+     - "9997:9999"
+    networks:
+      team2_net:
+        ipv4_address: 192.168.2.128
+        ipv6_address: 2001:3984:3990::10
+  pwn_team2_task2:
+    build: ./docker_env/team2_task2/
+    ports:
+     - "9996:9999"
+    networks:
+      team2_net:
+        ipv4_address: 192.168.2.129
+        ipv6_address: 2001:3984:3990::11
+
+
+networks:
+  team1_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.1.0/24
+#        gateway: 192.168.1.1
+      - subnet: 2001:3984:3989::/64
+#        gateway: 2001:3984:3989::1
+  team2_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.2.0/24
+#        gateway: 192.168.2.1
+      - subnet: 2001:3984:3990::/64
+#        gateway: 2001:3984:3990::1
